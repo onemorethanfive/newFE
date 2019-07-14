@@ -13,6 +13,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.19.0",
+    "echarts": "^4.2.1",
     "element": "^0.1.4",
     "element-ui": "^2.10.1",
     "jquery": "^3.4.1",

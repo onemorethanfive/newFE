@@ -20,7 +20,18 @@
                 <el-menu-item index="2" >便民服务</el-menu-item>
                 <el-menu-item index="3" >限额提醒</el-menu-item>
                 <el-menu-item index="4" >用户管理</el-menu-item>
-            </el-menu>
+                <el-dropdown style="float: right;margin-top: 1%;">
+                  <el-avatar  icon="el-icon-user-solid">
+                  </el-avatar>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>用户名</el-dropdown-item>
+                    <el-dropdown-item>用户管理</el-dropdown-item>
+                    <el-dropdown-item>登出</el-dropdown-item>
+                    <el-dropdown-item>注册</el-dropdown-item>
+                    <el-dropdown-item>更换账号</el-dropdown-item>
+                  </el-dropdown-menu>
+						    </el-dropdown>
+              </el-menu>
             
       </div>
     </div>
@@ -47,12 +58,10 @@ export default {
       if (this.scroll > 50) {
 				document.getElementById('header').classList.add('scrolled');
         document.getElementsByClassName('el-menu-demo')[0].classList.add('scrolled');
-        document.getElementsByClassName('el-submenu__title')[0].classList.add('scrolled');
         document.getElementsByClassName('el-menu-item')[0].classList.add('scrolled');
 			} else {
 				document.getElementById('header').classList.remove('scrolled');
         document.getElementsByClassName('el-menu-demo')[0].classList.remove('scrolled');
-        document.getElementsByClassName('el-submenu__title')[0].classList.remove('scrolled');
         document.getElementsByClassName('el-menu-item')[0].classList.remove('scrolled');
 			}
     }
