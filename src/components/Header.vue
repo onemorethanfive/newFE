@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <div class="gtco-nav">
+    <div id="header" class="gtco-nav">
       <div class="container">
         <div id="gtco-logo" style="padding-top: 1%;">
                 <a>易生活
@@ -45,15 +45,15 @@ export default {
       this.scroll = document.documentElement.scrollTop||document.body.scrollTop;
       
       if (this.scroll > 50) {
-				$('.gtco-nav').addClass('scrolled');
-				$('.el-menu-demo').addClass('scrolled');
-				$('.el-submenu__title').addClass('titlescrolled');
-				$('.el-menu-item').addClass('titlescrolled');
+				document.getElementById('header').classList.add('scrolled');
+        document.getElementsByClassName('el-menu-demo')[0].classList.add('scrolled');
+        document.getElementsByClassName('el-submenu__title')[0].classList.add('scrolled');
+        document.getElementsByClassName('el-menu-item')[0].classList.add('scrolled');
 			} else {
-				$('.gtco-nav').removeClass('scrolled');
-				$('.el-menu-demo').removeClass('scrolled');
-				$('.el-submenu__title').removeClass('titlescrolled');
-				$('.el-menu-item').removeClass('titlescrolled');
+				document.getElementById('header').classList.remove('scrolled');
+        document.getElementsByClassName('el-menu-demo')[0].classList.remove('scrolled');
+        document.getElementsByClassName('el-submenu__title')[0].classList.remove('scrolled');
+        document.getElementsByClassName('el-menu-item')[0].classList.remove('scrolled');
 			}
     }
   },
@@ -96,7 +96,6 @@ export default {
   width: 1170px;
   margin-right: auto;
   margin-left: auto;
-  padding-top: 1.2%;
   padding-right: 15px;
 }
 .gtco-nav.scrolled {
@@ -135,6 +134,18 @@ export default {
 }
 .gtco-nav.scrolled #gtco-logo em, .gtco-nav.scrolled #gtco-logo a {
   color: #cf1322;
+}
+.el-menu{
+  color:white;
+}
+.el-menu-item.is-active{
+  color:#cf1322!important;
+}
+.el-menu.scrolled{
+  color:black;
+}
+.el-menu-item{
+  color:inherit!important;
 }
 
 </style>
