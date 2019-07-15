@@ -30,8 +30,7 @@ export default {
 
 <style>
 .el-row{
-  background-color: gray;
-  height:1127px;
+  background-color: rgba(143, 0, 0, 0.288);
 }
 body{
   margin:0px;
@@ -65,8 +64,7 @@ body{
 .moneycard{
   position: relative;
   z-index: 1010;
-  top: 100px;
-  left: -30px;
+  top: 70px;
   right: 0;
   width: 60%;
   height: 80%;

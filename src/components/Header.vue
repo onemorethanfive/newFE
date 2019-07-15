@@ -67,7 +67,7 @@ export default {
 	methods: {
     handleSelect(key, keyPath) {
 			console.log(key, keyPath);
-		},
+    },
     menuScrolled(){
       this.scroll = document.documentElement.scrollTop||document.body.scrollTop;
       
@@ -107,10 +107,25 @@ export default {
         document.getElementsByClassName('container')[0].classList.remove('collapsed');
         this.isCollapse=false;
       }
-    }
+    };
+    if (document.body.clientWidth < 768) {
+        this.isCollapse = true;
+        this.elife="易";
+        this.elife2="";
+        document.getElementById('easylogot').classList.add('easylogo');
+        document.getElementsByClassName('container')[0].classList.add('collapsed');
+        this.isCollapse=true;      
+        window.removeEventListener('scroll', this.menuScrolled);
+      }else{      
+        this.elife="易生活";
+        this.elife2="EasyLife";  
+        window.addEventListener('scroll', this.menuScrolled);
+        document.getElementsByClassName('container')[0].classList.remove('collapsed');
+        this.isCollapse=false;
+      };
   },
   created: function(){
-
+    
   }
 }
 </script>
@@ -139,7 +154,6 @@ export default {
   top: 0;
   margin: 0;
   padding: 0;
-  width: 100%;
   z-index: 1001;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
@@ -147,13 +161,14 @@ export default {
 }
 .container{
   height:62px;
-  width: 1170px;
+  width: 30%;
   margin-right: auto;
-  margin-left: auto;
-  padding-right: 15px;
+  padding-top: 0.8%;
+  padding-left: 0.3%;
 }
 .gtco-nav.scrolled {
   background: #fff;
+  width:100%;
   -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);

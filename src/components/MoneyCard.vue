@@ -1,6 +1,6 @@
 <template>
   <div style="border-radius:10px;">
-    <el-card class="box-card" style="background-color: rgba(255, 255, 255, 0.61);">
+    <el-card class="box-card" :style="cardStyle">
       <div slot="header" class="clearfix">
         <span style="font-weight: 550;">个人总资产</span>
       </div>
@@ -10,7 +10,7 @@
         <el-form class="curMon" style="float:right;" ref="currentMoney" :model="currentMoney" label-width="300">
           <div class="moneytt">当前资产：(元)</div>
           <el-form-item >
-            <el-input size="large" class="showCurrentM" v-model="currentMoney.money" style="width:65%"></el-input>
+            <el-input size="large" class="showCurrentM" v-model="currentMoney.money" style="width:80%"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -49,11 +49,17 @@ export default {
       cardDialog:false,
       activeNames: [''],
       cards:[],
-      userId:'1'
+      userId:'1',
+      cardStyle:{
+
+      }
     }
   },
 	methods: {
     onclick: function(){
+      if (document.body.clientWidth < 768) {
+        this.cardStyle.width='80%';
+      }
 			this.cardDialog=true;	
 			this.getCards();
     },
@@ -124,6 +130,7 @@ export default {
   .box-card {
 		width: 110%;
     z-index: 3010;
+    background-color: rgba(255, 255, 255, 0.61);
 	}
 
   .cardimg{
@@ -135,7 +142,7 @@ export default {
 	}
 	.moneytt{
 	  color: #cf13328c;
-		font-size: 3.2rem;
+		font-size: 2rem;
 		float: left;
 		margin-left: 10%;
 		margin-top: 1%;
