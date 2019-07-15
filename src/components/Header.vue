@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import BillTab from "./BillTab";
-import EasyPayTab from "./EasyPayTab";
+import BillTab from "./billTab/BillTab";
+import EasyPayTab from "./easypayTab/EasyPayTab";
 export default {
   components: {
     BillTab,

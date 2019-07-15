@@ -32,9 +32,6 @@ export default {
 </script>
 
 <style scoped>
-.piechart{
-  height:400px;
-}
 .el-row{
   background-color: rgba(143, 0, 0, 0.288);
 }
