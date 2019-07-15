@@ -1,14 +1,29 @@
 <template>
-  <div><HOME/></div>
-
+<my-container >
+  <div id="app">
+    <div class="header"><Header/></div>
+    <div class="background"><Background/></div>
+    <div class="moneycard"><MoneyCard/></div>
+    <div class="echarts"><Echarts/></div>
+    <div class="piechart"><PieChart/></div>
+  </div>
+</my-container>
 </template>
 
 <script>
-import HOME from './components/HOME.vue'
+import Header from './Header'
+import Background from './Background'
+import MoneyCard from './MoneyCard'
+import Echarts from './ECharts'
+import PieChart from './PieChart'
 export default {
   name: 'App',
   components:{
-    HOME
+    Header,
+    Background,
+    MoneyCard,
+    Echarts,
+    PieChart
   }
 }
 </script>

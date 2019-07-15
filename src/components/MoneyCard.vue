@@ -152,7 +152,7 @@ export default {
 	.showCurrentM{
 		background-color: #ffffff00;
 		border-color: #ffffff00;
-		font-size:3.2rem;
+		font-size:2.2rem;
 		font-weight: 550;
     margin-top:1%;
 	}

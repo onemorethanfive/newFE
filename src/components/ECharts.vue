@@ -105,6 +105,7 @@ export default {
                     saveAsImage: {}
                 }
             },
+            grid: {show:'true',borderWidth:'0',height:"60%",width:"80%",y:"20%",x:"12%"},
             xAxis: {
                 type: 'category',  
                 boundaryGap: false,  // 无间隙
@@ -148,7 +149,7 @@ export default {
                     data: data
                 }
             ]
-        })
+        },true)
     }
   },
   mounted: function(){
