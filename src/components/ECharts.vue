@@ -1,6 +1,6 @@
 <template>
   <div class="board">
-    <div id="myChart" :style="{ width:'90%',height: '350px'}"></div>
+    <div id="lineChart" :style="{ width:'90%',height: '350px'}"></div>
   </div>
 </template>
 
@@ -9,12 +9,15 @@ export default {
   name: 'Echarts',
   data () {
     return {
+        userId:'1',
+        chartData:[],
+        chartDate:[]
     }
   },
 	methods: {
     drawLine(){
-        let myChart = this.$echarts.init(document.getElementById('myChart'))
-        myChart.setOption({
+        let lineChart = this.$echarts.init(document.getElementById('lineChart'))
+        lineChart.setOption({
             title: { text: '当月余额变化：（元）' ,
                       textStyle:{
                           color:'white',
@@ -52,8 +55,24 @@ export default {
             }]
         });
     },
+    async getData(){
+        var _self = this;
+        const {data} = await this.$axios.get('http://localhost:6060/dateBalance/getBalanceByUser/'+_self.userId);
+        var list = [];
+        var listdate = [];
+        for (var i = 0 ;i<data.length;i++){
+            list[i] = data[i].balance;
+            listdate[i] = data[i].date.substring(0,10);
+        }
+
+        
+        _self.chartData = list;
+        _self.chartDate = listdate;
+        _self.drawLine1();
+    }
+    ,
     drawLine1() {
-        var base = +new Date(2016, 7, 13);
+        var base = +new Date(2018, 7, 13);
         var oneDay = 24 * 3600 * 1000;
         var date = [];
 
@@ -64,9 +83,9 @@ export default {
             date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
             data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
         }
-   
-        let myChart = this.$echarts.init(document.getElementById('myChart'))
-        myChart.setOption({
+        data = this.chartData;
+        let lineChart = this.$echarts.init(document.getElementById('lineChart'))
+        lineChart.setOption({
             tooltip: {
                 trigger: 'axis',
                 position: function (pt) {
@@ -89,7 +108,7 @@ export default {
             xAxis: {
                 type: 'category',  
                 boundaryGap: false,  // 无间隙
-                data: date
+                data: this.chartDate
             },
             yAxis: {
                 type: 'value', 
@@ -116,7 +135,7 @@ export default {
                 {
                     name: '模拟数据',
                     type: 'line',
-                    smooth: true, 
+                    smooth: false, 
                     symbol: 'none',
                     sampling: 'average', 
                     itemStyle: {                
@@ -133,7 +152,7 @@ export default {
     }
   },
   mounted: function(){
-    this.drawLine1();
+    this.getData();
   }
 
 }

@@ -10,7 +10,7 @@
         <el-form class="curMon" style="float:right;" ref="currentMoney" :model="currentMoney" label-width="300">
           <div class="moneytt">当前资产：(元)</div>
           <el-form-item >
-            <el-input size="large" class="showCurrentM" v-model="currentMoney.money" style="width:55%"></el-input>
+            <el-input size="large" class="showCurrentM" v-model="currentMoney.money" style="width:65%"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -203,6 +203,6 @@ export default {
     font-weight: inherit;
   }
   .curMon{
-    margin-right: 5%;
+    width: 65%;
   }
 </style>
