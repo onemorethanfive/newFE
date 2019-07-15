@@ -3,23 +3,38 @@
     <div id="header" class="gtco-nav">
       <div class="container">
         <div id="gtco-logo" style="padding-top: 1%;">
-                <a>易生活
-                  <em style="font-style: normal;font-weight:400">EasyLife</em>
-                </a>
-              </div>
-
-            <el-menu
+          <a id = "easylogot">{{elife}}
+            <em style="font-style: normal;font-weight:400">{{elife2}}</em>
+          </a>
+        </div>
+      </div>
+      <el-menu
                   :default-active="activeIndex2"
-                  class="el-menu-demo"
-                  mode="horizontal"
+                  id = "menus"
+                  class="el-menu-vertical-demo"
                   background-color="rgba(255, 255, 255, 0)"
                   active-text-color="#f7596e"
                   text-color="white"
-                  style="font-weight: 550;width: 100%;margin-top:0px">
-                <el-menu-item index="1" style="margin-left:100px">资产管理</el-menu-item>
-                <el-menu-item index="2" >便民服务</el-menu-item>
-                <el-menu-item index="3" >限额提醒</el-menu-item>
-                <el-menu-item index="4" >用户管理</el-menu-item>
+                  style="font-weight: 550;float:left;margin-top:0px;border-right: none;"
+                  :collapse="isCollapse">
+                <el-menu-item index="1">
+                  <i class="el-icon-s-marketing"></i>
+                  <span slot="title">资产管理</span>
+                </el-menu-item>
+                <el-menu-item index="2" >
+                  <i class="el-icon-menu"></i>
+                  <span slot="title">便民服务</span>
+                </el-menu-item>
+                <el-menu-item index="3" >
+                  <i class="el-icon-document"></i>
+                  <span slot="title">限额提醒</span>
+                </el-menu-item>
+                <el-menu-item index="4" >
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">用户管理</span>
+                </el-menu-item>
+
+<!--                 
                 <el-dropdown style="float: right;margin-top: 1%;">
                   <el-avatar  icon="el-icon-user-solid">
                   </el-avatar>
@@ -30,10 +45,8 @@
                     <el-dropdown-item>注册</el-dropdown-item>
                     <el-dropdown-item>更换账号</el-dropdown-item>
                   </el-dropdown-menu>
-						    </el-dropdown>
+						    </el-dropdown> -->
               </el-menu>
-            
-      </div>
     </div>
 	</div>
 </template>
@@ -45,7 +58,10 @@ export default {
     return {
       activeIndex: '1',
       activeIndex2: '1',
-      scroll:''
+      scroll:'',
+      isCollapse:false,
+      elife:'易生活',
+      elife2:'EasyLife'
     }
   },
 	methods: {
@@ -55,19 +71,43 @@ export default {
     menuScrolled(){
       this.scroll = document.documentElement.scrollTop||document.body.scrollTop;
       
-      if (this.scroll > 50) {
+      if (this.scroll > 70) {
 				document.getElementById('header').classList.add('scrolled');
-        document.getElementsByClassName('el-menu-demo')[0].classList.add('scrolled');
+        document.getElementsByClassName('container')[0].classList.add('scrolled');
+				document.getElementById('menus').classList.add('scrolled');
         document.getElementsByClassName('el-menu-item')[0].classList.add('scrolled');
 			} else {
 				document.getElementById('header').classList.remove('scrolled');
-        document.getElementsByClassName('el-menu-demo')[0].classList.remove('scrolled');
+        document.getElementsByClassName('container')[0].classList.remove('scrolled');
+				document.getElementById('menus').classList.remove('scrolled');
         document.getElementsByClassName('el-menu-item')[0].classList.remove('scrolled');
 			}
     }
   },
   mounted(){
-    window.addEventListener('scroll', this.menuScrolled,true)
+      window.addEventListener('scroll', this.menuScrolled);
+    window.onresize = () => {      
+      if (document.body.clientWidth < 768) {
+        this.elife="易";
+        this.elife2="";
+        document.getElementsByClassName('container')[0].classList.add('collapsed');
+				document.getElementById('header').classList.remove('scrolled');
+        document.getElementsByClassName('container')[0].classList.remove('scrolled');
+        document.getElementById('easylogot').classList.add('easylogo');
+				document.getElementById('menus').classList.remove('scrolled');
+        document.getElementsByClassName('el-menu-item')[0].classList.remove('scrolled');
+        this.isCollapse=true;      
+        window.removeEventListener('scroll', this.menuScrolled);
+      }else{      
+        this.elife="易生活";
+        this.elife2="EasyLife";  
+        
+        document.getElementById('easylogot').classList.remove('easylogo');
+        window.addEventListener('scroll', this.menuScrolled);
+        document.getElementsByClassName('container')[0].classList.remove('collapsed');
+        this.isCollapse=false;
+      }
+    }
   },
   created: function(){
 
@@ -77,17 +117,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 #gtco-logo {
   margin-top:1.5%;
-  font-size: 30px;
+  font-size: 3.2rem;
   width:250px;
+  text-align: left;
   line-height: 1;
   margin: 0;
   padding: 0px 10px;
   color: #fff;
   float: left;
   font-weight: 700;
+}
+.easylogo{
+  font-size:3.6rem;
+  border: 5px solid;
+  border-radius: 10px;
 }
 .gtco-nav {
   position: fixed;
@@ -155,6 +200,20 @@ export default {
 }
 .el-menu-item{
   color:inherit!important;
+  font-size: 2rem;
+}
+.container.scrolled{
+  display: inline;
+}
+.container.collapsed{
+  display: block;
+}
+.el-menu--collapse{
+  background-color: white!important;
+  border-radius: 10px;
 }
 
+#menus.scrolled{
+  color:black;
+}
 </style>

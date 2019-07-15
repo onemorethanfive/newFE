@@ -128,14 +128,14 @@ export default {
 
   .cardimg{
     margin-left: 5%;
-		width:200px;
-		height: 200px;
+	    width: 30%;
+    height: 30%;
 		float: left;
 		margin-bottom: 20px;
 	}
 	.moneytt{
 	  color: #cf13328c;
-		font-size: 40px;
+		font-size: 3.2rem;
 		float: left;
 		margin-left: 10%;
 		margin-top: 1%;
@@ -145,7 +145,7 @@ export default {
 	.showCurrentM{
 		background-color: #ffffff00;
 		border-color: #ffffff00;
-		font-size:40px;
+		font-size:3.2rem;
 		font-weight: 550;
     margin-top:1%;
 	}
@@ -173,7 +173,7 @@ export default {
 		margin-top:-10px;
 		height:65px;
 		border: 5px solid #ffffff00;
-		font-size: 20px;
+		font-size: 1.5rem;
 		font-weight: 550;
 		padding-left: 25px;
 		color: white;
@@ -192,7 +192,7 @@ export default {
 	}
 	.el-collapse-item__content {
 		color:white;
-		font-size:20px;
+		font-size:1.5rem;
 		font-weight: 550;
 	}
 	.el-divider--horizontal{
@@ -201,6 +201,9 @@ export default {
 	}
   .el-input__inner{
     font-weight: inherit;
+  }
+  .el-card__header{
+    font-size: 2.5rem;
   }
   .curMon{
     width: 65%;

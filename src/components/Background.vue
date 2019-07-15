@@ -1,8 +1,9 @@
 <template>  
 <div>
+  <div class="overlay"></div>
   <section id="gtco-hero" class="gtco-cover" style="background-image: url;" data-section="home" data-stellar-background-ratio="0.5">
-    <div class="overlay"></div>
-    <img style="width:100% ; height: 900px" :src="imgurl"/>
+    <img style="width:100% ; height: 1100px" :src="imgurl"/>
+    <img style="width:100% ; height: 1100px" :src="imgurl"/>
     
   
   </section>

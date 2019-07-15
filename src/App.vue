@@ -1,5 +1,5 @@
 <template>
-<my-container>
+<my-container >
   <div id="app">
     <div class="header"><Header/></div>
     <div class="background"><Background/></div>
@@ -29,6 +29,13 @@ export default {
 </script>
 
 <style>
+.el-row{
+  background-color: gray;
+  height:1127px;
+}
+body{
+  margin:0px;
+}
 :root{
   font-size:10px;
 }
