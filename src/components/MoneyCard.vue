@@ -20,14 +20,13 @@
         title="银行卡包"
         :visible.sync="cardDialog"
         width="35%"
-        :before-close="handleClose" 
-        :modal='false'>
+        :before-close="handleClose" >
       <span>
           <el-collapse v-model="activeNames" @change="handleChange">
           <el-collapse-item v-for="(card, index) in cards" :title="card.cardNumber" :key="index" :name="index">
             <el-divider></el-divider>
-            <div>浙商银行 {{card.cardType}} </div>
-            <div>银行卡余额： {{card.cardMoney}}</div>	
+            <div>浙商银行 {{card.cardTypeName}} </div>
+            <div>银行卡余额：(元) {{card.cardMoney}}</div>	
           </el-collapse-item>
         </el-collapse>
       </span>
@@ -72,7 +71,16 @@ export default {
 			}).then((response)=>{
         var data = response.data;
 				for(var i = 0;i<data.length;i++){
-				  data[i].cardNumber = data[i].cardNumber.replace(/(.{4})/g,'$1 ');
+          data[i].cardNumber = data[i].cardNumber.replace(/(.{4})/g,'$1 ');
+          var all = data[i].cardMoney;
+          var back = all.substring(all.length-2,all.length);
+          all = all.substring(0,all.length-2)+"."+back;
+          data[i].cardMoney = all;
+          if(data[i].cardType == '1'){
+            data[i].cardTypeName = "储蓄金卡";
+          }else if(data[i].cardType == '0'){
+            data[i].cardTypeName = "储蓄红卡";
+          }
 				}
         _self.cards=data;
         _self.activeNames[0]=data.length-1;
@@ -215,5 +223,8 @@ export default {
   }
   .curMon{
     width: 65%;
+  }
+  .v-modal{
+    z-index:1000!important;
   }
 </style>
