@@ -6,6 +6,7 @@
     <div class="moneycard"><MoneyCard/></div>
     <div class="echarts"><Echarts/></div>
     <div class="piechart"><PieChart/></div>
+    <div class="buttonPanel"><ButtonPanel/></div>
   </div>
 </my-container>
 </template>
@@ -16,6 +17,7 @@ import Background from './Background'
 import MoneyCard from './MoneyCard'
 import Echarts from './ECharts'
 import PieChart from './PieChart'
+import ButtonPanel from './ButtonPanel'
 export default {
   name: 'App',
   components:{
@@ -23,7 +25,8 @@ export default {
     Background,
     MoneyCard,
     Echarts,
-    PieChart
+    PieChart,
+    ButtonPanel
   }
 }
 </script>
@@ -84,6 +87,15 @@ body{
     z-index: 1000;
     text-align: -webkit-center;
     top: 300px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+.buttonPanel{
+  position: relative;
+    z-index: 1000;
+    text-align: -webkit-center;
+    top: 400px;
     left: 0;
     right: 0;
     margin: 0 auto;

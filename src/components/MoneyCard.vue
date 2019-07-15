@@ -20,7 +20,8 @@
         title="银行卡包"
         :visible.sync="cardDialog"
         width="35%"
-        :before-close="handleClose" >
+        :before-close="handleClose" 
+        :modal='false'>
       <span>
           <el-collapse v-model="activeNames" @change="handleChange">
           <el-collapse-item v-for="(card, index) in cards" :title="card.cardNumber" :key="index" :name="index">
