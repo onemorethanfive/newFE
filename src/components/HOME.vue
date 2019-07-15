@@ -3,10 +3,10 @@
   <div id="app">
     <div class="header"><Header/></div>
     <div class="background"><Background/></div>
-    <div class="moneycard"><MoneyCard/></div>
+    <!-- <div class="moneycard"><MoneyCard/></div>
     <div class="echarts"><Echarts/></div>
     <div class="piechart"><PieChart/></div>
-    <div class="buttonPanel"><ButtonPanel/></div>
+    <div class="buttonPanel"><ButtonPanel/></div> -->
   </div>
 </my-container>
 </template>
@@ -14,24 +14,27 @@
 <script>
 import Header from './Header'
 import Background from './Background'
-import MoneyCard from './MoneyCard'
-import Echarts from './ECharts'
-import PieChart from './PieChart'
-import ButtonPanel from './ButtonPanel'
+// import MoneyCard from './MoneyCard'
+// import Echarts from './ECharts'
+// import PieChart from './PieChart'
+// import ButtonPanel from './ButtonPanel'
 export default {
   name: 'App',
   components:{
     Header,
     Background,
-    MoneyCard,
-    Echarts,
-    PieChart,
-    ButtonPanel
+    // MoneyCard,
+    // Echarts,
+    // PieChart,
+    // ButtonPanel
   }
 }
 </script>
 
-<style>
+<style scoped>
+.piechart{
+  height:400px;
+}
 .el-row{
   background-color: rgba(143, 0, 0, 0.288);
 }
@@ -43,14 +46,12 @@ body{
 }
 #app {
   font-family: "Open Sans", Arial, sans-serif;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
 .header{
-  position: fixed;
   top: 0;
   left: 0;
   margin: 0;
@@ -64,40 +65,6 @@ body{
   left: 0;
   z-index:0;
 }
-.moneycard{
-  position: relative;
-  z-index: 1010;
-  top: 70px;
-  right: 0;
-  width: 60%;
-  height: 80%;
-  margin: auto;
-}
-.echarts {
-    position: relative;
-    z-index: 1000;
-    text-align: -webkit-center;
-    top: 200px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-}
-.piechart{
-  position: relative;
-    z-index: 1000;
-    text-align: -webkit-center;
-    top: 300px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-}
-.buttonPanel{
-  position: relative;
-    z-index: 1000;
-    text-align: -webkit-center;
-    top: 400px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-}
+
+
 </style>

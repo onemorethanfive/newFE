@@ -25,45 +25,14 @@ body{
 }
 #app {
   font-family: "Open Sans", Arial, sans-serif;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  z-index: 3000;
-}
-.background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-.moneycard {
-  position: relative;
-  z-index: 1010;
-  top: 70px;
-  right: 0;
-  width: 60%;
-  height: 80%;
-  margin: auto;
-}
-.echarts {
-  position: relative;
-  z-index: 1000;
-  text-align: -webkit-center;
-  top: 200px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-}
+
+
+
 /* .piechart {
   position: relative;
   z-index: 1000;
@@ -73,13 +42,5 @@ body{
   right: 0;
   margin: 0 auto;
 } */
-.buttonPanel {
-  position: relative;
-  z-index: 1000;
-  text-align: -webkit-center;
-  top: 500px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-}
+
 </style>

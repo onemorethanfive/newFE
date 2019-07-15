@@ -3,38 +3,40 @@
     <div id="header" class="gtco-nav">
       <div class="container">
         <div id="gtco-logo" style="padding-top: 1%;">
-          <a id = "easylogot">{{elife}}
+          <a id="easylogot">
+            {{elife}}
             <em style="font-style: normal;font-weight:400">{{elife2}}</em>
           </a>
         </div>
       </div>
       <el-menu
-                  :default-active="activeIndex2"
-                  id = "menus"
-                  class="el-menu-vertical-demo"
-                  background-color="rgba(255, 255, 255, 0)"
-                  active-text-color="#f7596e"
-                  text-color="white"
-                  style="font-weight: 550;float:left;margin-top:0px;border-right: none;"
-                  :collapse="isCollapse">
-                <el-menu-item index="1">
-                  <i class="el-icon-s-marketing"></i>
-                  <span slot="title">资产管理</span>
-                </el-menu-item>
-                <el-menu-item index="2" >
-                  <i class="el-icon-menu"></i>
-                  <span slot="title">便民服务</span>
-                </el-menu-item>
-                <el-menu-item index="3" >
-                  <i class="el-icon-document"></i>
-                  <span slot="title">限额提醒</span>
-                </el-menu-item>
-                <el-menu-item index="4" >
-                  <i class="el-icon-setting"></i>
-                  <span slot="title">用户管理</span>
-                </el-menu-item>
+        :default-active="activeIndex2"
+        id="menus"
+        class="el-menu-vertical-demo"
+        background-color="rgba(255, 255, 255, 0)"
+        active-text-color="#f7596e"
+        text-color="white"
+        style="font-weight: 550;float:left;margin-top:0px;border-right: none;"
+        :collapse="isCollapse"
+      >
+        <el-menu-item index="1"  @click="curTab='BillTab'">
+          <i class="el-icon-s-marketing"></i>
+          <span slot="title">资产管理</span>
+        </el-menu-item>
+        <el-menu-item index="2" @click="curTab='EasyPayTab'">
+          <i class="el-icon-menu"></i>
+          <span slot="title">便民服务</span>
+        </el-menu-item>
+        <el-menu-item index="3">
+          <i class="el-icon-document"></i>
+          <span slot="title">限额提醒</span>
+        </el-menu-item>
+        <el-menu-item index="4">
+          <i class="el-icon-setting"></i>
+          <span slot="title">用户管理</span>
+        </el-menu-item>
 
-<!--                 
+        <!--                 
                 <el-dropdown style="float: right;margin-top: 1%;">
                   <el-avatar  icon="el-icon-user-solid">
                   </el-avatar>
@@ -45,97 +47,129 @@
                     <el-dropdown-item>注册</el-dropdown-item>
                     <el-dropdown-item>更换账号</el-dropdown-item>
                   </el-dropdown-menu>
-						    </el-dropdown> -->
-              </el-menu>
+        </el-dropdown>-->
+      </el-menu>
     </div>
-	</div>
+    <div>
+      <component :is="curTab" ></component>
+    </div>
+  </div>
 </template>
 
 <script>
+import BillTab from "./BillTab";
+import EasyPayTab from "./EasyPayTab";
 export default {
-  name: 'Header',
-  data () {
+  components: {
+    BillTab,
+    EasyPayTab
+  },
+  name: "Header",
+  data() {
     return {
-      activeIndex: '1',
-      activeIndex2: '1',
-      scroll:'',
-      isCollapse:false,
-      elife:'易生活',
-      elife2:'EasyLife'
-    }
+      activeIndex: "1",
+      activeIndex2: "1",
+      scroll: "",
+      isCollapse: false,
+      elife: "易生活",
+      elife2: "EasyLife",
+      curTab: "billTab"
+    };
   },
-	methods: {
+  methods: {
     handleSelect(key, keyPath) {
-			console.log(key, keyPath);
+      console.log(key, keyPath);
     },
-    menuScrolled(){
-      this.scroll = document.documentElement.scrollTop||document.body.scrollTop;
-      
+    changeTab(tab){
+      this.curTab=tab;
+    },
+    menuScrolled() {
+      this.scroll =
+        document.documentElement.scrollTop || document.body.scrollTop;
+
       if (this.scroll > 70) {
-				document.getElementById('header').classList.add('scrolled');
-        document.getElementsByClassName('container')[0].classList.add('scrolled');
-				document.getElementById('menus').classList.add('scrolled');
-        document.getElementsByClassName('el-menu-item')[0].classList.add('scrolled');
-			} else {
-				document.getElementById('header').classList.remove('scrolled');
-        document.getElementsByClassName('container')[0].classList.remove('scrolled');
-				document.getElementById('menus').classList.remove('scrolled');
-        document.getElementsByClassName('el-menu-item')[0].classList.remove('scrolled');
-			}
+        document.getElementById("header").classList.add("scrolled");
+        document
+          .getElementsByClassName("container")[0]
+          .classList.add("scrolled");
+        document.getElementById("menus").classList.add("scrolled");
+        document
+          .getElementsByClassName("el-menu-item")[0]
+          .classList.add("scrolled");
+      } else {
+        document.getElementById("header").classList.remove("scrolled");
+        document
+          .getElementsByClassName("container")[0]
+          .classList.remove("scrolled");
+        document.getElementById("menus").classList.remove("scrolled");
+        document
+          .getElementsByClassName("el-menu-item")[0]
+          .classList.remove("scrolled");
+      }
     }
   },
-  mounted(){
-      window.addEventListener('scroll', this.menuScrolled);
-    window.onresize = () => {      
+  mounted() {
+    window.addEventListener("scroll", this.menuScrolled);
+    window.onresize = () => {
       if (document.body.clientWidth < 768) {
-        this.elife="易";
-        this.elife2="";
-        document.getElementsByClassName('container')[0].classList.add('collapsed');
-				document.getElementById('header').classList.remove('scrolled');
-        document.getElementsByClassName('container')[0].classList.remove('scrolled');
-        document.getElementById('easylogot').classList.add('easylogo');
-				document.getElementById('menus').classList.remove('scrolled');
-        document.getElementsByClassName('el-menu-item')[0].classList.remove('scrolled');
-        this.isCollapse=true;      
-        window.removeEventListener('scroll', this.menuScrolled);
-      }else{      
-        this.elife="易生活";
-        this.elife2="EasyLife";  
-        
-        document.getElementById('easylogot').classList.remove('easylogo');
-        window.addEventListener('scroll', this.menuScrolled);
-        document.getElementsByClassName('container')[0].classList.remove('collapsed');
-        this.isCollapse=false;
+        this.elife = "易";
+        this.elife2 = "";
+        document
+          .getElementsByClassName("container")[0]
+          .classList.add("collapsed");
+        document.getElementById("header").classList.remove("scrolled");
+        document
+          .getElementsByClassName("container")[0]
+          .classList.remove("scrolled");
+        document.getElementById("easylogot").classList.add("easylogo");
+        document.getElementById("menus").classList.remove("scrolled");
+        document
+          .getElementsByClassName("el-menu-item")[0]
+          .classList.remove("scrolled");
+        this.isCollapse = true;
+        window.removeEventListener("scroll", this.menuScrolled);
+      } else {
+        this.elife = "易生活";
+        this.elife2 = "EasyLife";
+
+        document.getElementById("easylogot").classList.remove("easylogo");
+        window.addEventListener("scroll", this.menuScrolled);
+        document
+          .getElementsByClassName("container")[0]
+          .classList.remove("collapsed");
+        this.isCollapse = false;
       }
     };
     if (document.body.clientWidth < 768) {
-        this.isCollapse = true;
-        this.elife="易";
-        this.elife2="";
-        document.getElementById('easylogot').classList.add('easylogo');
-        document.getElementsByClassName('container')[0].classList.add('collapsed');
-        this.isCollapse=true;      
-        window.removeEventListener('scroll', this.menuScrolled);
-      }else{      
-        this.elife="易生活";
-        this.elife2="EasyLife";  
-        window.addEventListener('scroll', this.menuScrolled);
-        document.getElementsByClassName('container')[0].classList.remove('collapsed');
-        this.isCollapse=false;
-      };
+      this.isCollapse = true;
+      this.elife = "易";
+      this.elife2 = "";
+      document.getElementById("easylogot").classList.add("easylogo");
+      document
+        .getElementsByClassName("container")[0]
+        .classList.add("collapsed");
+      this.isCollapse = true;
+      window.removeEventListener("scroll", this.menuScrolled);
+    } else {
+      this.elife = "易生活";
+      this.elife2 = "EasyLife";
+      window.addEventListener("scroll", this.menuScrolled);
+      document
+        .getElementsByClassName("container")[0]
+        .classList.remove("collapsed");
+      this.isCollapse = false;
+    }
   },
-  created: function(){
-    
-  }
-}
+  created: function() {}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #gtco-logo {
-  margin-top:1.5%;
+  margin-top: 1.5%;
   font-size: 3.2rem;
-  width:250px;
+  width: 250px;
   text-align: left;
   line-height: 1;
   margin: 0;
@@ -144,8 +178,8 @@ export default {
   float: left;
   font-weight: 700;
 }
-.easylogo{
-  font-size:3.6rem;
+.easylogo {
+  font-size: 3.6rem;
   border: 5px solid;
   border-radius: 10px;
 }
@@ -159,8 +193,8 @@ export default {
   -o-transition: 0.3s;
   transition: 0.3s;
 }
-.container{
-  height:62px;
+.container {
+  height: 62px;
   width: 30%;
   margin-right: auto;
   padding-top: 0.8%;
@@ -168,7 +202,7 @@ export default {
 }
 .gtco-nav.scrolled {
   background: #fff;
-  width:100%;
+  width: 100%;
   -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
@@ -201,34 +235,35 @@ export default {
   padding: 4px 20px;
   color: #fff;
 }
-.gtco-nav.scrolled #gtco-logo em, .gtco-nav.scrolled #gtco-logo a {
+.gtco-nav.scrolled #gtco-logo em,
+.gtco-nav.scrolled #gtco-logo a {
   color: #cf1322;
 }
-.el-menu{
-  color:white;
+.el-menu {
+  color: white;
 }
-.el-menu-item.is-active{
-  color:#cf1322!important;
+.el-menu-item.is-active {
+  color: #cf1322 !important;
 }
-.el-menu.scrolled{
-  color:black;
+.el-menu.scrolled {
+  color: black;
 }
-.el-menu-item{
-  color:inherit!important;
+.el-menu-item {
+  color: inherit !important;
   font-size: 2rem;
 }
-.container.scrolled{
+.container.scrolled {
   display: inline;
 }
-.container.collapsed{
+.container.collapsed {
   display: block;
 }
-.el-menu--collapse{
-  background-color: white!important;
+.el-menu--collapse {
+  background-color: white !important;
   border-radius: 10px;
 }
 
-#menus.scrolled{
-  color:black;
+#menus.scrolled {
+  color: black;
 }
 </style>
