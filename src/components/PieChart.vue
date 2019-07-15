@@ -1,6 +1,6 @@
 <template>
   <div class="pieboard">
-    <div id="pieChart" :style="{ width:'90%',height: '350px'}"></div>
+    <div id="pieChart" :style="{ width:'90%',height: '100%'}"></div>
   </div>
 </template>
 
@@ -10,45 +10,30 @@ export default {
   data () {
     return {
         userId:'1',
-        chartData:[],
-        chartDate:[]
+        list:[],
     }
   },
 	methods: {
     async getData(){
         var _self = this;
-        const {data} = await this.$axios.get('http://localhost:6060/dateBalance/getBalanceByUser/'+_self.userId);
-        var list = [];
-        var listdate = [];
+        const {data} = await this.$axios.get('http://localhost:6060/bill/getBillsByMonth/'+this.userId);
+        _self.list = data;
         for (var i = 0 ;i<data.length;i++){
-            list[i] = data[i].balance;
-            listdate[i] = data[i].date.substring(0,10);
+            _self.list[i]["value"] = _self.list[i]["billNumber"];
+            _self.list[i]["name"] = _self.list[i]["billTag"];
+            delete _self.list[i]["billNumber"];
+            delete _self.list[i]["billTag"];
         }
 
-        
-        _self.chartData = list;
-        _self.chartDate = listdate;
         _self.drawPie();
     }
     ,
     drawPie() {
-        var base = +new Date(2018, 7, 13);
-        var oneDay = 24 * 3600 * 1000;
-        var date = [];
-
-        var data = [Math.random() * 300];
-
-        for (var i = 1; i < 365; i++) {
-            var now = new Date(base += oneDay);
-            date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
-            data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
-        }
-        data = this.chartData;
         let pieChart = this.$echarts.init(document.getElementById('pieChart'))
         pieChart.setOption({
             backgroundColor: '#2c343c',
             title: {
-                text: 'Customized Pie',
+                text: '当月支出饼状图',
                 left: 'center',
                 top: 20,
                 textStyle: {
@@ -64,24 +49,18 @@ export default {
             visualMap: {
                 show: false,
                 min: 80,
-                max: 600,
+                max: 1000,
                 inRange: {
                     colorLightness: [0, 1]
                 }
             },
             series : [
                 {
-                    name:'访问来源',
+                    name:'支出钟类',
                     type:'pie',
-                    radius : '55%',
+                    radius : '90%',
                     center: ['50%', '50%'],
-                    data:[
-                        {value:335, name:'直接访问'},
-                        {value:310, name:'邮件营销'},
-                        {value:274, name:'联盟广告'},
-                        {value:235, name:'视频广告'},
-                        {value:400, name:'搜索引擎'}
-                    ].sort(function (a, b) { return a.value - b.value; }),
+                    data:this.list.sort(function (a, b) { return a.value - b.value; }),
                     roseType: 'radius',
                     label: {
                         normal: {
@@ -129,6 +108,8 @@ export default {
 <style >
   .pieboard{
     background-color: rgba(255, 255, 255, 0.61);
-    border-radius:10px
+    border-radius:10px;
+        height: 100%;
   }
+  
 </style>
