@@ -29,8 +29,9 @@ export default {
     }
     ,
     drawPie() {
+        var _this = this;
         let pieChart = this.$echarts.init(document.getElementById('pieChart'))
-        pieChart.setOption({
+        var option={
             backgroundColor: '#2c343c',
             title: {
                 text: '当月支出饼状图',
@@ -94,7 +95,19 @@ export default {
                     }
                 }
             ]
-        })
+        };
+
+        pieChart.setOption(option);
+        setTimeout(function (){
+            window.addEventListener("resize",()=>{
+                pieChart.resize();
+                if (document.body.clientWidth < 768) {
+                    _this.$root.visible =false;
+                }else{
+                    _this.$root.visible =true;
+                }
+            })
+        },200)
     }
   },
   mounted: function(){

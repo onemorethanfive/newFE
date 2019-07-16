@@ -202,7 +202,6 @@ export default {
 }
 .gtco-nav.scrolled {
   background: #fff;
-  width: 100%;
   -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);

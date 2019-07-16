@@ -3,7 +3,7 @@
     <div class="moneycard">
       <MoneyCard />
     </div>
-    <div class="echarts">
+    <div class="echarts" :v-show="show">
       <Echarts />
     </div>
     <div class="piechart">
@@ -27,6 +27,11 @@ export default {
     Echarts,
     PieChart,
     // BillsTable
+  },
+  data(){
+    return{
+      show:this.$root.visible,
+    }
   }
 };
 </script>
