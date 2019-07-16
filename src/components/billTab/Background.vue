@@ -1,6 +1,6 @@
 <template>
   <div id="background">
-    <img style="width:100% ;" :src="imgurl"/>
+    <img style="width:100% ;margin-top: 40px;" :src="imgurl"/>
   </div>
 </template>
     

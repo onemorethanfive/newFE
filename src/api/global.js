@@ -3,6 +3,8 @@ new Vue({
     data: function(){
         return {
             visible: true,
+            lab1:'test',
+            is:true
         }
     },
     render: h => h(App)

@@ -77,7 +77,7 @@ export default {
         var date = [];
 
         var data = [Math.random() * 300];
-
+        var _this = this;
         for (var i = 1; i < 365; i++) {
             var now = new Date(base += oneDay);
             date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
@@ -150,6 +150,11 @@ export default {
                 }
             ]
         },true)
+        setTimeout(function (){
+            window.addEventListener("resize",()=>{
+                lineChart.resize();
+            })
+        },200)
     }
   },
   mounted: function(){
