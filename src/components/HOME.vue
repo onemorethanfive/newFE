@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      login: false
+      login: true
     };
   },
   methods:{
@@ -57,7 +57,9 @@ export default {
 
 <style scoped>
 .el-row {
-  background-color: rgba(143, 0, 0, 0.288);
+  background-color:rgb(99, 0, 0);
+  height: 1400px;
+
 }
 body {
   margin: 0px;

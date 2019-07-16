@@ -120,7 +120,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style >
   .pieboard{
-    background-color: rgba(255, 255, 255, 0.61);
+    background-color: rgba(255, 255, 255);
     border-radius:10px;
         height: 100%;
   }

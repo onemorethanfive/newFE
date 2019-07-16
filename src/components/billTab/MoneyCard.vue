@@ -188,7 +188,7 @@ export default {
 .box-card {
   width: 110%;
   z-index: 3010;
-  background-color: rgba(255, 255, 255, 0.61);
+  background-color: rgba(255, 255, 255);
 }
 
 .cardimg {

@@ -30,6 +30,9 @@ body{
   text-align: center;
   color: #2c3e50;
 }
+.el-col-lg-18 {
+    width: 100%;
+}
 
 
 

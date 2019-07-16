@@ -2,7 +2,7 @@
   <div class="hello">
     <div id="header" class="gtco-nav">
       <div class="container">
-        <div id="gtco-logo" style="padding-top: 1%;">
+        <div id="gtco-logo" style="padding-top: 1.5%;">
           <a id="easylogot">
             {{elife}}
             <em style="font-style: normal;font-weight:400">{{elife2}}</em>
@@ -31,9 +31,9 @@
           <i class="el-icon-document"></i>
           <span slot="title">限额提醒</span>
         </el-menu-item>
-        <el-menu-item index="4">
+        <el-menu-item index="4" @click="curTab='PiggyBagTab'">
           <i class="el-icon-setting"></i>
-          <span slot="title">用户管理</span>
+          <span slot="title">小猪储蓄</span>
         </el-menu-item>
 
         <!--                 
@@ -59,10 +59,12 @@
 <script>
 import BillTab from "./billTab/BillTab";
 import EasyPayTab from "./easypayTab/EasyPayTab";
+import PiggyBagTab from "./piggyTab/PiggyBagTab";
 export default {
   components: {
     BillTab,
-    EasyPayTab
+    EasyPayTab,
+    PiggyBagTab
   },
   name: "Header",
   data() {
@@ -201,7 +203,9 @@ export default {
   padding-left: 0.3%;
 }
 .gtco-nav.scrolled {
+  border-radius: 0px 0px 20px 20px;
   background: #fff;
+  width: 100%;
   -webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);

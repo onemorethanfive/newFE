@@ -15,46 +15,46 @@ export default {
     }
   },
 	methods: {
-    drawLine(){
-        let lineChart = this.$echarts.init(document.getElementById('lineChart'))
-        lineChart.setOption({
-            title: { text: '当月余额变化：（元）' ,
-                      textStyle:{
-                          color:'white',
-                          fontSize:'50'
-                      },
-                      x:'center'          
-                },
-            tooltip: {},
-            xAxis: {
-                data: ["6/1","6/2","6/3","6/4","6/5","6/6","6/7","6/8","6/9","6/10","6/11","6/12","6/13","6/14","6/15","6/16","6/17","6/18","6/19","6/20","6/21","6/22","6/23","6/24","6/25","6/26","6/27","6/28","6/29","6/30"]
-            },
-            yAxis: {},
-            series: [{
-                name: '销量',
-                type: 'line',
-                itemStyle : {  
-                  normal : {  
-                    color:'#00FF00',  
-                    lineStyle:{  
-                      color:'#00FF00' 
-                    },
-                    textStyle:{
-                      fontSize:10,
-                      color:'#000000'
-                    }
-                  } ,
-                  label:{
-                    textStyle:{
-                      fontSize:10,
-                      color:'#000000'
-                    }
-                  }
-                },  
-                data: [5, 20, 36, 10, 10, 20]
-            }]
-        });
-    },
+    // drawLine(){
+    //     let lineChart = this.$echarts.init(document.getElementById('lineChart'))
+    //     lineChart.setOption({
+    //         title: { text: '当月余额变化：（元）' ,
+    //                   textStyle:{
+    //                       color:'white',
+    //                       fontSize:'50'
+    //                   },
+    //                   x:'center'          
+    //             },
+    //         tooltip: {},
+    //         xAxis: {
+    //             data: ["6/1","6/2","6/3","6/4","6/5","6/6","6/7","6/8","6/9","6/10","6/11","6/12","6/13","6/14","6/15","6/16","6/17","6/18","6/19","6/20","6/21","6/22","6/23","6/24","6/25","6/26","6/27","6/28","6/29","6/30"]
+    //         },
+    //         yAxis: {},
+    //         series: [{
+    //             name: '销量',
+    //             type: 'line',
+    //             itemStyle : {  
+    //               normal : {  
+    //                 color:'#00FF00',  
+    //                 lineStyle:{  
+    //                   color:'#00FF00' 
+    //                 },
+    //                 textStyle:{
+    //                   fontSize:10,
+    //                   color:'#000000'
+    //                 }
+    //               } ,
+    //               label:{
+    //                 textStyle:{
+    //                   fontSize:10,
+    //                   color:'#000000'
+    //                 }
+    //               }
+    //             },  
+    //             data: [5, 20, 36, 10, 10, 20]
+    //         }]
+    //     });
+    // },
     async getData(){
         var _self = this;
         const {data} = await this.$axios.get('http://localhost:6060/dateBalance/getBalanceByUser/'+_self.userId);
@@ -162,7 +162,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style >
   .board{
-    background-color: rgba(255, 255, 255, 0.61);
+    background-color: rgba(255, 255, 255);
     border-radius:10px
   }
 </style>
