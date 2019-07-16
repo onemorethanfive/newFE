@@ -57,7 +57,7 @@ export default {
 
 <style scoped>
 .el-row {
-  background-color:rgb(99, 0, 0);
+  background-color:rgba(193, 193, 193, 0.2);
   height: 1400px;
 
 }

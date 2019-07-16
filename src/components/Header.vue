@@ -89,7 +89,7 @@ export default {
       this.scroll =
         document.documentElement.scrollTop || document.body.scrollTop;
 
-      if (this.scroll > 70) {
+      if (this.scroll > 1&&this.scroll<400) {
         document.getElementById("header").classList.add("scrolled");
         document
           .getElementsByClassName("container")[0]
@@ -98,7 +98,8 @@ export default {
         document
           .getElementsByClassName("el-menu-item")[0]
           .classList.add("scrolled");
-      } else {
+      }else if(this.scroll>400){
+
         document.getElementById("header").classList.remove("scrolled");
         document
           .getElementsByClassName("container")[0]
@@ -107,7 +108,7 @@ export default {
         document
           .getElementsByClassName("el-menu-item")[0]
           .classList.remove("scrolled");
-      }
+      } 
     }
   },
   mounted() {
@@ -176,7 +177,7 @@ export default {
   line-height: 1;
   margin: 0;
   padding: 0px 10px;
-  color: #fff;
+  color: #cf1322;
   float: left;
   font-weight: 700;
 }
@@ -243,7 +244,7 @@ export default {
   color: #cf1322;
 }
 .el-menu {
-  color: white;
+  color: #4c4444;
 }
 .el-menu-item.is-active {
   color: #cf1322 !important;

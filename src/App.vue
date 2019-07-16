@@ -33,7 +33,9 @@ body{
 .el-col-lg-18 {
     width: 100%;
 }
-
+.el-col-lg-3{
+  height: 0px;
+}
 
 
 /* .piechart {

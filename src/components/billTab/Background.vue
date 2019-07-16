@@ -1,41 +1,20 @@
 <template>
-  <div id="billTab">
-    <div class="background">
-      <Background />
-    </div>
-    <div class="moneycard">
-      <MoneyCard />
-    </div>
-    <div class="echarts" :v-show="show">
-      <Echarts />
-    </div>
-    <div class="piechart">
-      <PieChart />
-    </div>
-    <!-- <div class="billsTable">
-      <BillsTable /> -->
-    <!-- </div> -->
+  <div id="background">
+    <img style="width:100% ;" :src="imgurl"/>
   </div>
 </template>
     
 <script>
-import MoneyCard from "./MoneyCard";
-import Echarts from "./ECharts";
-import PieChart from "./PieChart";
-import Background from "./Background";
 // import BillsTable from "./BillsTable";
 export default {
-  name: "BillTab",
+  name: "Background",
   components: {
-    MoneyCard,
-    Echarts,
-    PieChart,
-    Background
     // BillsTable
   },
   data(){
     return{
-      show:this.$root.visible,
+      imgurl:require("../../assets/chooseus3.jpg")
+      
     }
   }
 };
