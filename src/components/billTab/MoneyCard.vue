@@ -157,7 +157,7 @@ export default {
           } else {
             alet("修改失败，请稍后再试！");
           }
-          this.editDialog = false;
+          _self.editDialog = false;
         })
         .catch(error => {
           console.log(error);

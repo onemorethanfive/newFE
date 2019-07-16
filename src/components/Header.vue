@@ -27,8 +27,8 @@
           <i class="el-icon-menu"></i>
           <span slot="title">便民服务</span>
         </el-menu-item>
-        <el-menu-item index="3">
-          <i class="el-icon-document"></i>
+        <el-menu-item index="3" @click="curTab='LimitTab'">
+          <i class="el-icon-document" ></i>
           <span slot="title">限额提醒</span>
         </el-menu-item>
         <el-menu-item index="4" @click="curTab='PiggyBagTab'">
@@ -60,11 +60,13 @@
 import BillTab from "./billTab/BillTab";
 import EasyPayTab from "./easypayTab/EasyPayTab";
 import PiggyBagTab from "./piggyTab/PiggyBagTab";
+import LimitTab from "./limitTab/LimitTab";
 export default {
   components: {
     BillTab,
     EasyPayTab,
-    PiggyBagTab
+    PiggyBagTab,
+    LimitTab
   },
   name: "Header",
   data() {

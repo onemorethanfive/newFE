@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <el-row>
+    <div>
       <el-col :span="4" :offset="6">
         <el-button round class="pay-button" @click="addPayPanel('水费缴纳')">水 费</el-button>
       </el-col>
@@ -10,19 +10,19 @@
       <el-col :span="4">
         <el-button round class="pay-button" @click="addPayPanel('煤气费缴纳')">煤 气 费</el-button>
       </el-col>
-    </el-row>
-    <el-row>
+    </div>
+    <div>
       <el-col :span="4" :offset="6">
         <el-button round class="pay-button" @click="addPayPanel('有线电视费缴纳')">有线电视</el-button>
       </el-col>
       <el-col :span="4">
-        <el-button round class="pay-button" @click="addPayPanel('话费缴纳')">话 费</el-button>
+        <el-button round class="pay-button" @click="addPayPanel('话费缴纳')">网 费</el-button>
       </el-col>
       <el-col :span="4">
         <el-button round class="pay-button" @click="addBillPanel">缴费记录</el-button>
       </el-col>
-    </el-row>
-    <el-dialog title="缴费" :visible.sync="payDialog" width="35%" :modal="false">
+    </div>
+    <el-dialog title="缴费" :visible.sync="payDialog" width="35%" :modal="false" class="dialogPanel">
       <span></span>
       <div>
         <el-radio-group v-model="payNum">
@@ -37,7 +37,13 @@
         <el-button type="danger" @click="payDialog=false">取消</el-button>
       </span>
     </el-dialog>
-    <el-dialog title="缴费明细" :visible.sync="billdialog" width="80%" :modal="false">
+    <el-dialog
+      title="缴费明细"
+      :visible.sync="billdialog"
+      width="80%"
+      :modal="false"
+      class="dialogPanel"
+    >
       <el-table :data="billData" :stripe="true" height="350" style="width: 100%">
         <el-table-column prop="billDate" label="日期" width="180"></el-table-column>
         <el-table-column prop="billId" label="流水号" width="180"></el-table-column>
@@ -49,8 +55,12 @@
 </template>
 
 <script>
+import {EventBus} from "../../EventBus";
 export default {
   name: "BottonPanel",
+  // components: {
+  //   EventBus
+  // },
   data() {
     return {
       payDialog: false,
@@ -59,13 +69,13 @@ export default {
       payRemarks: "",
       userId: "1",
       projectTag: "easyPay",
-      billData: []
+      billData: [],
+      site: "英冠水天城"
     };
   },
   methods: {
     addPayPanel(remark) {
       this.payDialog = true;
-      console.log("1.data is");
       console.log(this.billData);
       this.payRemarks = remark;
     },
@@ -77,21 +87,21 @@ export default {
       this.payDialog = false;
     },
     pay() {
-      console.log(this.payNum);
       var _self = this;
+      var billRemarks = this.payRemarks + "-" + this.site;
       this.$axios
         .get("http://localhost:6060//bill/add", {
           params: {
             billNum: _self.payNum,
-            billRemarks: _self.payRemarks,
+            billRemarks: billRemarks,
             cardId: 1
           }
         })
         .then(response => {
           var data = response.data;
-          // console.log(data);
           if (data == 1) {
             alert("缴费成功！");
+            this.payDialog = false;
           }
         })
         .catch(error => {
@@ -119,17 +129,24 @@ export default {
         });
     }
   },
-  mounted() {},
+  mounted() {
+    EventBus.$on("changeSite", site => {
+      this.site = site;
+    });
+  },
   created: function() {}
 };
 </script>
 
 <style scoped>
 .pay-button {
-  height: 100%;
+  height: 8vw;
+  width: 12vw;
   background-size: cover;
-  font-size: 0.8rem;
   color: white;
-  background-color: #cf1322;
+  background-color: #f8b6b6;
+}
+.el-dialog {
+  z-index: 1200;
 }
 </style>
