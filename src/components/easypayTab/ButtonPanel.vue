@@ -38,7 +38,7 @@
       </span>
     </el-dialog>
     <el-dialog title="缴费明细" :visible.sync="billdialog" width="80%" :modal="false">
-        <el-table :data="billData" :stripe=true height="350" style="width: 100%">
+      <el-table :data="billData" :stripe="true" height="350" style="width: 100%">
         <el-table-column prop="billDate" label="日期" width="180"></el-table-column>
         <el-table-column prop="billId" label="流水号" width="180"></el-table-column>
         <el-table-column prop="billNum" label="充值数额"></el-table-column>

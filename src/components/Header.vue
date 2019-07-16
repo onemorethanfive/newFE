@@ -114,6 +114,7 @@ export default {
   mounted() {
     window.addEventListener("scroll", this.menuScrolled);
     window.onresize = () => {
+      console.log("window.onresize")
       if (document.body.clientWidth < 768) {
         this.elife = "易";
         this.elife2 = "";

@@ -24,7 +24,7 @@
             ></el-input>
           </el-form-item>
         </el-form>
-        <el-button round class="pay-button" @click="addBillPanel">缴费记录</el-button>
+        <el-button type="primary" plain  @click="addBillPanel">余额变动明细<i class="el-icon-upload el-icon--right"></i></el-button>
       </div>
     </el-card>
 
@@ -47,13 +47,56 @@
         <el-button type="danger" @click="closeCards">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog title="缴费明细" :visible.sync="billdialog" width="80%" :modal="false">
-      <el-table :data="billData" :stripe="true" height="350" style="width: 100%">
+    <el-dialog title="余额变动明细" :visible.sync="billdialog" width="80%" :modal="false">
+      <el-table
+        :data="billData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+        height="350"
+        style="width: 100%"
+        :row-class-name="getTableClass"
+      >
         <el-table-column prop="billDate" label="日期" width="180"></el-table-column>
         <el-table-column prop="billId" label="流水号" width="180"></el-table-column>
-        <el-table-column prop="billNum" label="充值数额"></el-table-column>
+        <el-table-column prop="billNum" label="变动数额"></el-table-column>
+        <el-table-column prop="billType" label="收支类型" width="50"></el-table-column>
+
         <el-table-column prop="billRemarks" label="备注"></el-table-column>
+        <el-table-column fixed="right" label="分类" width="150">
+          <template slot-scope="scope">
+            <el-tag
+              :type="getTagClass(scope.row.billEztag)"
+              disable-transitions
+            >{{getTagName(scope.row.billEztag)}}</el-tag>
+            <el-button
+              type="primary"
+              icon="el-icon-edit"
+              circle
+              @click="addEditPanel(scope.row.billId)"
+              size="mini"
+            ></el-button>
+          </template>
+        </el-table-column>
       </el-table>
+
+      <div class="block" style="margin-top:15px;">
+        <el-pagination
+          align="center"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[5,10,20]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="billData.length"
+        ></el-pagination>
+      </div>
+    </el-dialog>
+    <el-dialog title="编辑消费标签" :visible.sync="editDialog" width="80%" :modal="false">
+      <el-tag :type="getTagClass('clothes')" disable-transitions @click="changeTag('衣物')">衣物</el-tag>
+      <el-tag :type="getTagClass('eat')" disable-transitions @click="changeTag('饮食')">饮食</el-tag>
+      <el-tag :type="getTagClass('house')" disable-transitions @click="changeTag('住宿')">居住</el-tag>
+      <el-tag :type="getTagClass('travel')" disable-transitions @click="changeTag('旅行')">出行</el-tag>
+      <el-tag :type="getTagClass('amusement')" disable-transitions @click="changeTag('娱乐')">娱乐</el-tag>
+      <el-tag :type="getTagClass('others')" disable-transitions @click="changeTag('其他')">其他</el-tag>
     </el-dialog>
   </div>
 </template>
@@ -69,13 +112,18 @@ export default {
       },
       cardDialog: false,
       billdialog: false,
+      editDialog: false,
       activeNames: [""],
       cards: [],
       userId: "1",
       cardStyle: {},
-      billData: []
+      billData: [],
+      curBillId: 0,
+      currentPage: 1,
+      pageSize: 10
     };
   },
+
   methods: {
     onclick: function() {
       if (document.body.clientWidth < 768) {
@@ -88,21 +136,120 @@ export default {
       this.getRecording();
       this.billdialog = true;
     },
-    getRecording() {
+    addEditPanel(billId) {
+      this.curBillId = billId;
+      this.editDialog = true;
+    },
+    changeTag(tag) {
+      alert(this.curBillId);
       var _self = this;
       this.$axios
-        .get("http://localhost:6060//bill/getBillsByUserAndTag", {
+        .get("http://localhost:6060//billCardMap/updateTag", {
           params: {
-            userId: this.userId,
-            tag: this.projectTag
+            billId: this.curBillId,
+            tag: tag
           }
         })
         .then(response => {
-          var bills = response.data;
+          var data = response.data;
+          if (data == 1) {
+            alert("修改成功！");
+          } else {
+            alet("修改失败，请稍后再试！");
+          }
+          this.editDialog = false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getTableClass({ row, rowIndex }) {
+      if (row.billType == "1") {
+        return "income-row";
+      } else {
+        return "outcome-row";
+      }
+    },
+    getTagName(tag) {
+      var classType = "";
+      switch (tag) {
+        case "CLOTHES": {
+          classType = "衣物";
+          break;
+        }
+        case "EAT": {
+          classType = "饮食";
+          break;
+        }
+        case "HOUSE": {
+          classType = "居住";
+          break;
+        }
+        case "TRAVEL": {
+          classType = "出行";
+          break;
+        }
+        case "AMUSEMENT": {
+          classType = "娱乐";
+          break;
+        }
+        default: {
+          classType = "其他";
+          break;
+        }
+      }
+      return classType;
+    },
+    getTagClass(tag) {
+      var classType = "";
+      switch (tag) {
+        case "CLOTHES": {
+          classType = "";
+          break;
+        }
+        case "EAT": {
+          classType = "success";
+          break;
+        }
+        case "HOUSE": {
+          classType = "info";
+          break;
+        }
+        case "TRAVEL": {
+          classType = "danger";
+          break;
+        }
+        case "AMUSEMENT": {
+          classType = "warning";
+          break;
+        }
+        default: {
+          classType = "";
+          break;
+        }
+      }
+      return classType;
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.currentPage = 1;
+      this.pageSize = val;
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+    },
+    getRecording() {
+      var _self = this;
+      this.$axios
+        .get("http://localhost:6060//bill/getBillsTagByUser", {
+          params: {
+            userId: this.userId
+          }
+        })
+        .then(response => {
           var data = response.data;
           _self.billData = data;
-          // console.log(data);
-          // console.log(bills[0]);
         })
         .catch(error => {
           console.log(error);
@@ -274,5 +421,12 @@ export default {
 }
 .v-modal {
   z-index: 1000 !important;
+}
+.el-table .income-row {
+  background: rgb(252, 204, 204)
+}
+
+.el-table .outcome-row {
+  background: #d0ffd0;
 }
 </style>
