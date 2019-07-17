@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-col :span="4" :offset="6">
-      <div class="moneytt">当前地址:</div>
+      <div class="moneytt">&nbsp;&nbsp;&nbsp;当前地址:</div>
     </el-col>
-    <el-col :span="4">
+    <el-col :span="5" align="center">
       <div class="moneytt">{{site}}</div>
     </el-col>
     <el-col :span="2">
