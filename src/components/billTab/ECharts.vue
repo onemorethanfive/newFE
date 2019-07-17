@@ -134,9 +134,9 @@ export default {
             }],
             series: [
                 {
-                    name: '模拟数据',
+                    name: '当日余额',
                     type: 'line',
-                    smooth: false, 
+                    smooth: true, 
                     symbol: 'none',
                     sampling: 'average', 
                     itemStyle: {                

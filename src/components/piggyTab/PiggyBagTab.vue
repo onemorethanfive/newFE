@@ -10,26 +10,26 @@
 
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="每日零钱">
-          <el-input @input="countTarget" v-model="form.dailyMoney"></el-input>
+          <el-input :disabled="edit" oninput = "value=value.replace(/[^\d]/g,'')" prefix-icon="el-icon-coin" maxlength="8" @input="countTarget" v-model="form.dailyMoney"></el-input>
         </el-form-item> 
         <el-form-item label="开始时间">
           <el-col :span="11">
-            <el-date-picker type="date" @input="countTarget" placeholder="选择日期" v-model="form.startDate" style="width: 150%;"></el-date-picker>
+            <el-date-picker :disabled="true" type="date" @input="countTarget" placeholder="选择日期" v-model="form.startDate" style="width: 150%;"></el-date-picker>
           </el-col>
         </el-form-item>
         <el-form-item label="结束时间">
           <el-col :span="11">
-            <el-date-picker type="date" @input="countTarget" placeholder="选择日期" v-model="form.endDate" style="width: 150%;"></el-date-picker>
+            <el-date-picker :disabled="edit" type="date" @input="countTarget" placeholder="选择日期" v-model="form.endDate" style="width: 150%;"></el-date-picker>
           </el-col>
         </el-form-item>
-        <el-form-item label="预计金额">
-          <el-input v-model="form.targetMoney"></el-input>
+        <el-form-item label="预期金额">
+          <el-input :disabled="edit" prefix-icon="el-icon-money" v-model="form.targetMoney"></el-input>
         </el-form-item>
-        <el-form-item label="已存金额">
-          <el-input :disabled="true" v-model="form.moneyPool"></el-input>
+        <el-form-item label="梦想红包">
+          <el-input :disabled="edit" prefix-icon="el-icon-present" v-model="luckymoney"></el-input>
         </el-form-item>
         <el-form-item >
-          <el-button type="danger" @click="savePiggy">保存</el-button>
+          <el-button :disabled="edit" type="danger" @click="open">保存</el-button>
         </el-form-item>
         
         
@@ -46,7 +46,9 @@ export default {
   data() {
     return {
       form: {},
-      userId:'1'
+      userId:'1',
+      luckymoney:'',
+      edit:false
     };
   },
   components:{
@@ -72,11 +74,17 @@ export default {
       if(this.form.startDate!=undefined&&this.form.endDate!=undefined&&this.form.dailyMoney!=undefined&&this.form.dailyMoney!=""&&this.form.startDate!=""&&this.form.endDate!=""){
         var date1 = this.form.startDate;
         var date2 = this.form.endDate;
-        var date=(date2.getTime()-date1.getTime())/(1000*60*60*24);
+        var date=Math.round((date2.getTime()-date1.getTime())/(1000*60*60*24));
+        
         console.log(date);
         // var sds = this.form.startDate.replace(/-/g,"");
         // var eds = this.form.endDate.replace(/-/g,"");
         this.form.targetMoney=this.form.dailyMoney*date;
+        this.form.targetMoney = this.form.targetMoney.toFixed(2);
+        
+        var pocketrate = 0.03/360;
+        this.luckymoney = this.form.targetMoney*pocketrate*date;
+        this.luckymoney = this.luckymoney.toFixed(2);
       }
     },
     getData(){
@@ -91,10 +99,13 @@ export default {
           var bills = response.data;
           if(bills!=""){
             _self.form = bills;
+            _self.form.startDate = new Date(_self.form.startDate);
+            _self.form.endDate = new Date(_self.form.endDate);
+            _self.edit=true;
           }else{
             _self.form = {
               dailyMoney:"",
-              startDate:"",
+              startDate:new Date(),
               endDate:"",
               targetMoney:"",
               moneyPool:"0"
@@ -105,12 +116,33 @@ export default {
           console.log(error);
         });
     },
+    open() {
+        this.$confirm('您将购入小猪储蓄，此举将每日随机从您的绑定银行卡中取出金额并投入小猪储蓄，若中途停止则无法获得小猪红包噢', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.savePiggy();
+          this.$message({
+            type: 'error',
+            message: '购买成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消购买'
+          });          
+        });
+      },
     savePiggy(){
       var _self = this;
-      var s=_self.form.startDate.toJSON();
+      var s1  = new Date(_self.form.startDate);
+      var s=s1.toJSON();
       s=s.substring(0,10);
       _self.form.startDate = s;
-      var ss=_self.form.endDate.toJSON();
+
+      var ss1 = new Date(_self.form.endDate);
+      var ss=ss1.toJSON();
       ss=ss.substring(0,10);
       _self.form.endDate = ss;
       var piggybag = _self.form;
@@ -146,7 +178,7 @@ export default {
 
 <style scoped>
 .box-card1{
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
 }
 </style>
