@@ -19,7 +19,7 @@
         style="font-weight: 550;float:left;margin-top:0px;border-right: none;"
         :collapse="isCollapse"
       >
-        <el-menu-item index="1"  @click="curTab='BillTab'">
+        <el-menu-item index="1" @click="curTab='BillTab'">
           <i class="el-icon-s-marketing"></i>
           <span slot="title">资产管理</span>
         </el-menu-item>
@@ -28,7 +28,7 @@
           <span slot="title">便民服务</span>
         </el-menu-item>
         <el-menu-item index="3" @click="curTab='LimitTab'">
-          <i class="el-icon-document" ></i>
+          <i class="el-icon-document"></i>
           <span slot="title">限额提醒</span>
         </el-menu-item>
         <el-menu-item index="4" @click="curTab='PiggyBagTab'">
@@ -36,22 +36,11 @@
           <span slot="title">小猪储蓄</span>
         </el-menu-item>
 
-        <!--                 
-                <el-dropdown style="float: right;margin-top: 1%;">
-                  <el-avatar  icon="el-icon-user-solid">
-                  </el-avatar>
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>用户名</el-dropdown-item>
-                    <el-dropdown-item>用户管理</el-dropdown-item>
-                    <el-dropdown-item>登出</el-dropdown-item>
-                    <el-dropdown-item>注册</el-dropdown-item>
-                    <el-dropdown-item>更换账号</el-dropdown-item>
-                  </el-dropdown-menu>
-        </el-dropdown>-->
+        <el-button type="primary" round @click="handleSubmit">登出</el-button>
       </el-menu>
     </div>
     <div>
-      <component :is="curTab" ></component>
+      <component :is="curTab"></component>
     </div>
   </div>
 </template>
@@ -84,14 +73,14 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
-    changeTab(tab){
-      this.curTab=tab;
+    changeTab(tab) {
+      this.curTab = tab;
     },
     menuScrolled() {
       this.scroll =
         document.documentElement.scrollTop || document.body.scrollTop;
 
-      if (this.scroll > 1&&this.scroll<400) {
+      if (this.scroll > 1 && this.scroll < 400) {
         document.getElementById("header").classList.add("scrolled");
         document
           .getElementsByClassName("container")[0]
@@ -100,8 +89,7 @@ export default {
         document
           .getElementsByClassName("el-menu-item")[0]
           .classList.add("scrolled");
-      }else if(this.scroll>400){
-
+      } else if (this.scroll > 400) {
         document.getElementById("header").classList.remove("scrolled");
         document
           .getElementsByClassName("container")[0]
@@ -110,13 +98,19 @@ export default {
         document
           .getElementsByClassName("el-menu-item")[0]
           .classList.remove("scrolled");
-      } 
+      }
+    },
+    handleSubmit(event) {
+      var _self = this;
+      alert("即将登出!");
+      localStorage.removeItem("token");
+      this.$router.push({ path: "/" });
     }
   },
   mounted() {
     window.addEventListener("scroll", this.menuScrolled);
     window.onresize = () => {
-      console.log("window.onresize")
+      console.log("window.onresize");
       if (document.body.clientWidth < 768) {
         this.elife = "易";
         this.elife2 = "";
@@ -273,9 +267,7 @@ export default {
 #menus.scrolled {
   color: black;
 }
-.piggy{
-  
-    margin-top: 5%;
+.piggy {
+  margin-top: 5%;
 }
-
 </style>
