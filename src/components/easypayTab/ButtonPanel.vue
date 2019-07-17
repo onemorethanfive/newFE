@@ -1,11 +1,11 @@
 <template>
   <div class="container" style="text-align:center">
-    <el-row>
+    <el-row type="flex" justify="center">
         <el-button round class="pay-button" @click="addPayPanel('水费缴纳')">水 费</el-button>
         <el-button round class="pay-button" @click="addPayPanel('电费缴纳')">电 费</el-button>
         <el-button round class="pay-button" @click="addPayPanel('煤气费缴纳')">煤 气 费</el-button>
     </el-row>
-    <el-row>
+    <el-row type="flex" justify="center">
         <el-button round class="pay-button" @click="addPayPanel('有线电视费缴纳')">有线电视</el-button>
         <el-button round class="pay-button" @click="addPayPanel('话费缴纳')">网 费</el-button>
         <el-button round class="pay-button" @click="addBillPanel">缴费记录</el-button>
@@ -136,8 +136,5 @@ export default {
 }
 .el-dialog {
   z-index: 1200;
-}
-.el-row{
-  background-color: transparent
 }
 </style>

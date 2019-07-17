@@ -3,15 +3,20 @@
     <div class="limitPic">
       <LimitPic />
     </div>
+    <div class="limitProgress">
+      <LimitProgress />
+    </div>
   </div>
 </template>
 
 <script>
 import LimitPic from "./limitPic";
+import LimitProgress from "./LimitProgress";
 export default {
   name: "LimitTab",
   components :{
-    LimitPic
+    LimitPic,
+    LimitProgress
   },
   data() {
     return {};
