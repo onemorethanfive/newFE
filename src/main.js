@@ -7,10 +7,12 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import $ from 'jquery'
 import axios from 'axios'
+// axios.defaults.headers["token"] = ""
 import echarts from 'echarts'
 import global from './api/global_variables.js'
 
 import { setTimeout } from 'timers';
+
 Vue.component('my-container',{
   template:`
   <el-row>
@@ -41,3 +43,35 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+axios.interceptors.request.use(
+  config => {
+      console.log("调用拦截器")
+      var token = localStorage["token"];
+      if (token) {
+          // 这里将token设置到headers中，header的key是Authorization，这个key值根据你的需要进行修改即可
+          config.headers.Authorization = token;
+      }
+      
+      // else if(config.headers.){
+      // }
+      return config
+  },
+  error => {
+      return Promise.reject(error)
+  });
+
+  router.beforeEach((to, from, next) => {
+    console.log("调用 beforeEach")
+    if (to.path === '/login') {
+      next();
+    } else {
+      let token = localStorage.getItem('Authorization');
+   
+      if (token === 'null' || token === '') {
+        next('/login');
+      } else {
+        next();
+      }
+    }
+  });

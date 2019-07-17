@@ -25,7 +25,11 @@
       <el-form-item style="width:100%;">
         <el-button type="primary" style="width:100%;" @click="handleSubmit" :loading="login">登录</el-button>
       </el-form-item>
+      <el-button>
+      <router-link to="/signup">注册</router-link>
+      </el-button>
     </el-form>
+    
   </div>
 </template>
 
@@ -61,10 +65,18 @@ export default {
         .post("http://localhost:6060/user/signIn/", this.ruleForm2)
         .then(response => {
           var data = response.data;
-
           console.log(data);
-          
-          this.login = true
+          if(data.userId == null)
+          {
+            console.log("error");
+            
+          }
+          else{
+            localStorage["token"] = data.token
+            console.log(localStorage["token"] );
+            this.login = true
+            this.$router.push({ path:'/'})
+          }
         })
         .catch(error => {
           console.log(error);

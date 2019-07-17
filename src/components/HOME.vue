@@ -16,7 +16,8 @@
       </div>
       <div v-else>
         <div class="login">
-          <Login @getLogin="getLogin"/>
+          <!-- <Login @getLogin="getLogin" /> -->
+          <Login/>
         </div>
       </div>
     </div>
@@ -44,22 +45,38 @@ export default {
   },
   data() {
     return {
+      token:null,
       login: true
     };
   },
   methods:{
-    getLogin(msg){//msg就是传过来的数据了  这只是个形参  名字可以随意
-      this.login=msg;//然后将数据赋值给chindVal
-    }
-  }
+    // getLogin(msg){//msg就是传过来的数据了  这只是个形参  名字可以随意
+    //   this.login=msg;//然后将数据赋值给chindVal
+    // }
+  },
+  created: function(){
+    this.token = localStorage["token"];
+    if(localStorage["token"] == null){
+      this.login = false
+      console.log("token 为空 重定向至login")
+      this.$router.push({ path:'/login'})
+      }
+    else
+      this.login = true
+  },
+  mounted: function () {
+         //此方法刷新页面时也会执行
+         window.addEventListener('beforeunload',()=>{
+            localStorage.removeItem('token');
+        });
+    },
 };
 </script>
 
 <style scoped>
 .el-row {
-  background-color:rgba(193, 193, 193, 0.2);
+  background-color: rgba(193, 193, 193, 0.2);
   height: 1400px;
-
 }
 body {
   margin: 0px;
