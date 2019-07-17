@@ -58,7 +58,7 @@ export default {
     // },
     async getData(){
         var _self = this;
-        const {data} = await this.$axios.get('http://localhost:6060/dateBalance/getBalanceByUser/'+_self.userId);
+        const {data} = await this.$axios.get(_self.$root.urlport+'/dateBalance/getBalanceByUser/'+_self.userId);
         var list = [];
         var listdate = [];
         for (var i = 0 ;i<data.length;i++){

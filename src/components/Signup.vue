@@ -86,7 +86,7 @@ export default {
         console.log(form)
           var _self = this;
           this.$axios
-            .post("http://localhost:6060/user/signUp/", form)
+            .post(_self.$root.urlport+"/user/signUp/", form)
             .then(response => {
               var data = response.data;
               console.log(data);

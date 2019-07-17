@@ -144,7 +144,7 @@ export default {
       alert(this.curBillId);
       var _self = this;
       this.$axios
-        .get("http://localhost:6060//billCardMap/updateTag", {
+        .get(_self.$root.urlport+"/billCardMap/updateTag", {
           params: {
             billId: this.curBillId,
             tag: tag
@@ -242,7 +242,7 @@ export default {
     getRecording() {
       var _self = this;
       this.$axios
-        .get("http://localhost:6060//bill/getBillsTagByUser", {
+        .get(_self.$root.urlport+"/bill/getBillsTagByUser", {
           params: {
             userId: this.userId
           }
@@ -259,7 +259,7 @@ export default {
       var _self = this;
       var userId = this.userId;
       this.$axios
-        .get("http://localhost:6060/card/getCardByUser/" + userId, {
+        .get(_self.$root.urlport+"/card/getCardByUser/" + userId, {
           params: {}
         })
         .then(response => {
@@ -287,7 +287,7 @@ export default {
       var _self = this;
       var userId = this.userId;
       this.$axios
-        .get("http://localhost:6060/card/getMoneyByUser/" + userId, {
+        .get(_self.$root.urlport+"/card/getMoneyByUser/" + userId, {
           params: {}
         })
         .then(response => {

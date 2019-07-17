@@ -78,7 +78,7 @@ export default {
       var _self = this;
       var billRemarks = this.payRemarks + "-" + this.site;
       this.$axios
-        .get("http://localhost:6060//bill/add", {
+        .get(_self.$root.urlport+"/bill/add", {
           params: {
             billNum: _self.payNum,
             billRemarks: billRemarks,
@@ -99,7 +99,7 @@ export default {
     getRecording() {
       var _self = this;
       this.$axios
-        .get("http://localhost:6060//bill/getBillsByUserAndTag", {
+        .get(_self.$root.urlport+"bill/getBillsByUserAndTag", {
           params: {
             userId: this.userId,
             tag: this.projectTag

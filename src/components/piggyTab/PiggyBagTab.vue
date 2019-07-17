@@ -59,7 +59,7 @@ export default {
       var _self = this;
       var piggybag = _self.form;
       this.$axios
-        .post("http://localhost:6060/piggy/addBag", {
+        .post(_self.$root.urlport+"/piggy/addBag", {
           params: {
             bag:_self.form
           }
@@ -90,7 +90,7 @@ export default {
     getData(){
       var _self = this;
       this.$axios
-        .get("http://localhost:6060/piggy/getByUser", {
+        .get(_self.$root.urlport+"/piggy/getByUser", {
           params: {
             userId: this.userId
           }
@@ -148,7 +148,7 @@ export default {
       var piggybag = _self.form;
       piggybag.userId = this.userId;
       this.$axios
-        .get("http://localhost:6060/piggy/addBag", {
+        .get(_self.$root.urlport+"6060/piggy/addBag", {
           params: {
             dailyMoney:_self.form.dailyMoney,
             startDate:_self.form.startDate,

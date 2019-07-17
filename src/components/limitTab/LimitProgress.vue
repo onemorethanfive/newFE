@@ -48,7 +48,7 @@ export default {
     getData() {
       var _self = this;
       this.$axios
-        .get("http://localhost:6060/userSpend/updateUserSpend", {
+        .get(_self.$root.urlport+"/userSpend/updateUserSpend", {
           params: {
             userId: this.userId
           }

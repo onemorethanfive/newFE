@@ -16,7 +16,7 @@ export default {
 	methods: {
     async getData(){
         var _self = this;
-        const {data} = await this.$axios.get('http://localhost:6060/bill/getBillsByMonth/'+this.userId);
+        const {data} = await this.$axios.get(_self.$root.urlport+'/bill/getBillsByMonth/'+this.userId);
         _self.list = data;
         for (var i = 0 ;i<data.length;i++){
             _self.list[i]["value"] = _self.list[i]["billNumber"];

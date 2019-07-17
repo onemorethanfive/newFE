@@ -62,7 +62,7 @@ export default {
     handleSubmit(event) {
       var _self = this;
       this.$axios
-        .post("http://localhost:6060/user/signIn/", this.ruleForm2)
+        .post(_self.$root.urlport+"/user/signIn/", this.ruleForm2)
         .then(response => {
           var data = response.data;
           console.log(data);
