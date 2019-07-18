@@ -47,8 +47,8 @@ export default {
       bg2:require('../assets/RedO1.jpg'),
       login: false,
       ruleForm2: {
-        userId: "",
-        userPsw: ""
+        userId: "fff",
+        userPsw: "12345"
       },
       red:document.body.clientWidth<768,
       rules2: {
