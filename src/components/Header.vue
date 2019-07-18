@@ -35,8 +35,10 @@
           <i class="el-icon-setting"></i>
           <span slot="title">小猪储蓄</span>
         </el-menu-item>
-
-        <el-button type="primary" round @click="handleSubmit">登出</el-button>
+        <el-menu-item index="5" @click="handleSubmit">
+          <i class="el-icon-s-custom"></i>
+          <span slot="title">用户登出</span>
+        </el-menu-item>
       </el-menu>
     </div>
     <div>
@@ -104,7 +106,7 @@ export default {
       var _self = this;
       alert("即将登出!");
       localStorage.removeItem("token");
-      this.$router.push({ path: "/" });
+      this.$router.push({ path: "/login" });
     }
   },
   mounted() {
