@@ -133,6 +133,7 @@ export default {
   background-size: cover;
   color: white;
   background-color: #f8b6b6;
+  text-align: center;
 }
 .el-dialog {
   z-index: 1200;

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-col :span="4" :offset="6">
-      <div class="moneytt">&nbsp;&nbsp;&nbsp;当前地址:</div>
+    <el-col :xs="{span:8,offset:4}" :sm="{span:4,offset:7}" :md="{span:4,offset:8}">
+      <div  class="moneytt">当前地址:</div>
     </el-col>
-    <el-col :span="5" align="center">
+    <el-col :xs="{span:8}" :sm="{span:4}" :md="{span:3}">
       <div class="moneytt">{{site}}</div>
     </el-col>
     <el-col :span="2">
@@ -17,11 +17,11 @@
       class="dialogPanel"
     >
       <el-table :data="siteData" :stripe="true" height="350" style="width: 100%">
-        <el-table-column prop="householdId" label="序号" width="30"></el-table-column>
+        <el-table-column prop="householdId" label="序号" width="50"></el-table-column>
         <el-table-column prop="householdName" label="名称" width="100"></el-table-column>
         <el-table-column prop="householdLoc" label="详细地址"></el-table-column>
-        <el-table-column prop="householdNum" label="户号"></el-table-column>
-        <el-table-column fixed="right" label="操作" width="150">
+        <el-table-column prop="householdNum" label="户号" width="80"></el-table-column>
+        <el-table-column fixed="right" label="操作" width="80">
           <template slot-scope="scope">
             <el-button type="primary" @click="changeSite(scope.row.householdName)" size="mini">选择</el-button>
           </template>
