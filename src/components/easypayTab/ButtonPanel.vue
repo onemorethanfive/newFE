@@ -99,7 +99,7 @@ export default {
     getRecording() {
       var _self = this;
       this.$axios
-        .get(_self.$root.urlport+"bill/getBillsByUserAndTag", {
+        .get(_self.$root.urlport+"/bill/getBillsByUserAndTag", {
           params: {
             userId: this.userId,
             tag: this.projectTag
