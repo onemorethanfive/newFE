@@ -1,7 +1,12 @@
 <template>
   <div class="board">
     <div id="lineChart" :style="{ width:'90%',height: '350px'}"></div>
-    <el-button type="primary" style="width:100%;" @click="handleSubmit" class="login-button">登录</el-button>
+    <el-button type="primary" style="width:20%;" @click="showFund" class="show-button">显示基金</el-button>
+
+    <el-dialog title="基金推荐" :visible.sync="showdialog" width="80%" :modal="false">
+        <el-tag>{{numTag}}</el-tag>
+        <el-tag>{{riskTag}}</el-tag>
+        </el-dialog>
   </div>
 </template>
 
@@ -12,10 +17,41 @@ export default {
     return {
         userId:'1',
         chartData:[],
-        chartDate:[]
+        chartDate:[],
+        showdialog: false,
+      fundData:[],
+      numTag:"Nan",
+      riskTag:"Nan",
     }
   },
 	methods: {
+        showFund() {
+      this.$axios
+        .get("http://localhost:6060/dateBalance/findBestInvestment/" + this.userId)
+        .then(response => {
+          var data = response.data;
+            if(data[0] == "0")
+                this.numTag = "小额基金"
+            if(data[0] == "1")
+                this.numTag = "中额基金"
+            if(data[0] == "2")
+                this.numTag = "大额基金"
+
+            if(data[1] == "0")
+                this.riskTag = "小风险"
+            if(data[1] == "1")
+                this.riskTag = "中风险"
+            if(data[1] == "2")
+                this.riskTag = "大风险"
+
+            
+
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      this.showdialog = true;
+    },
     // drawLine(){
     //     let lineChart = this.$echarts.init(document.getElementById('lineChart'))
     //     lineChart.setOption({

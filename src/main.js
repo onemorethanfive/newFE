@@ -36,7 +36,8 @@ new Vue({
   data: function(){
     return {
       visible:true,
-      urlport:'http://114.155.141.194:8087'
+      //urlport:'http://114.155.141.194:8087'
+      urlport:'http://127.0.0.1:6060'
     }
   },
   render: h => h(App),
