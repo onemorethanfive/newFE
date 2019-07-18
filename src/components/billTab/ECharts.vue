@@ -3,49 +3,91 @@
     <div id="lineChart" :style="{ width:'90%',height: '350px'}"></div>
     <el-button type="primary" style="width:20%;" @click="showFund" class="show-button">显示基金</el-button>
 
-    <el-dialog title="基金推荐" :visible.sync="showdialog" width="80%" :modal="false">
+    <div class="fund-table">
+      <el-dialog title="基金推荐" :visible.sync="showdialog" width="60%" :modal="false">
         <el-tag>{{numTag}}</el-tag>
         <el-tag>{{riskTag}}</el-tag>
-        </el-dialog>
+        <el-table :data="tableData" stripe style="width: 100%" height="250">
+          <el-table-column prop="address" label="基金名"></el-table-column>
+          <el-table-column prop="date" label="单位净值" width="180"></el-table-column>
+          <el-table-column prop="name" label="涨幅" width="180"></el-table-column>
+        </el-table>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Echarts',
-  data () {
+  name: "Echarts",
+  data() {
     return {
-        userId:'1',
-        chartData:[],
-        chartDate:[],
-        showdialog: false,
-      fundData:[],
-      numTag:"Nan",
-      riskTag:"Nan",
-    }
+      userId: "1",
+      chartData: [],
+      chartDate: [],
+      showdialog: false,
+      fundData: [],
+      numTag: "Nan",
+      riskTag: "Nan",
+      tableData: [
+        {
+          date: "1.9450",
+          name: "12.36%",
+          address: "博时医疗保健行业混合"
+        },
+        {
+          date: "1.1212",
+          name: "9.70%",
+          address: "国联安心灵活配置"
+        },
+        {
+          date: "1.1251",
+          name: "9.24%",
+          address: "嘉实泰和混合"
+        },
+        {
+          date: "1.1235",
+          name: "9.23%",
+          address: "广发稳健增长混合"
+        },
+        {
+          date: "1.9450",
+          name: "12.36%",
+          address: "博时医疗保健行业混合"
+        },
+        {
+          date: "1.1212",
+          name: "9.70%",
+          address: "国联安心灵活配置"
+        },
+        {
+          date: "1.1251",
+          name: "9.24%",
+          address: "嘉实泰和混合"
+        },
+        {
+          date: "1.1235",
+          name: "9.23%",
+          address: "广发稳健增长混合"
+        }
+      ]
+    };
   },
-	methods: {
-        showFund() {
+  methods: {
+    showFund() {
       this.$axios
-        .get("http://localhost:6060/dateBalance/findBestInvestment/" + this.userId)
+        .get(
+          this.$root.urlport + "/dateBalance/findBestInvestment/" + this.userId
+        )
         .then(response => {
           var data = response.data;
-            if(data[0] == "0")
-                this.numTag = "小额基金"
-            if(data[0] == "1")
-                this.numTag = "中额基金"
-            if(data[0] == "2")
-                this.numTag = "大额基金"
+          if (data[0] == "0") this.numTag = "小额基金";
+          if (data[0] == "1") this.numTag = "中额基金";
+          if (data[0] == "2") this.numTag = "大额基金";
 
-            if(data[1] == "0")
-                this.riskTag = "小风险"
-            if(data[1] == "1")
-                this.riskTag = "中风险"
-            if(data[1] == "2")
-                this.riskTag = "大风险"
-
-            
-
+          if (data[1] == "0") this.riskTag = "小风险";
+          if (data[1] == "1") this.riskTag = "中风险";
+          if (data[1] == "2") this.riskTag = "大风险";
         })
         .catch(error => {
           console.log(error);
@@ -60,7 +102,7 @@ export default {
     //                       color:'white',
     //                       fontSize:'50'
     //                   },
-    //                   x:'center'          
+    //                   x:'center'
     //             },
     //         tooltip: {},
     //         xAxis: {
@@ -70,11 +112,11 @@ export default {
     //         series: [{
     //             name: '销量',
     //             type: 'line',
-    //             itemStyle : {  
-    //               normal : {  
-    //                 color:'#00FF00',  
-    //                 lineStyle:{  
-    //                   color:'#00FF00' 
+    //             itemStyle : {
+    //               normal : {
+    //                 color:'#00FF00',
+    //                 lineStyle:{
+    //                   color:'#00FF00'
     //                 },
     //                 textStyle:{
     //                   fontSize:10,
@@ -87,128 +129,142 @@ export default {
     //                   color:'#000000'
     //                 }
     //               }
-    //             },  
+    //             },
     //             data: [5, 20, 36, 10, 10, 20]
     //         }]
     //     });
     // },
-    async getData(){
-        var _self = this;
-        const {data} = await this.$axios.get(_self.$root.urlport+'/dateBalance/getBalanceByUser/'+_self.userId);
-        var list = [];
-        var listdate = [];
-        for (var i = 0 ;i<data.length;i++){
-            list[i] = data[i].balance;
-            listdate[i] = data[i].date.substring(0,10);
-        }
+    async getData() {
+      var _self = this;
+      const { data } = await this.$axios.get(
+        _self.$root.urlport + "/dateBalance/getBalanceByUser/" + _self.userId
+      );
+      var list = [];
+      var listdate = [];
+      for (var i = 0; i < data.length; i++) {
+        list[i] = data[i].balance;
+        listdate[i] = data[i].date.substring(0, 10);
+      }
 
-        
-        _self.chartData = list;
-        _self.chartDate = listdate;
-        _self.drawLine1();
-    }
-    ,
+      _self.chartData = list;
+      _self.chartDate = listdate;
+      _self.drawLine1();
+    },
     drawLine1() {
-        var base = +new Date(2018, 7, 13);
-        var oneDay = 24 * 3600 * 1000;
-        var date = [];
+      var base = +new Date(2018, 7, 13);
+      var oneDay = 24 * 3600 * 1000;
+      var date = [];
 
-        var data = [Math.random() * 300];
-        var _this = this;
-        for (var i = 1; i < 365; i++) {
-            var now = new Date(base += oneDay);
-            date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
-            data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
-        }
-        data = this.chartData;
-        let lineChart = this.$echarts.init(document.getElementById('lineChart'))
-        lineChart.setOption({
-            tooltip: {
-                trigger: 'axis',
-                position: function (pt) {
-                    return [pt[0], '10%'];
+      var data = [Math.random() * 300];
+      var _this = this;
+      for (var i = 1; i < 365; i++) {
+        var now = new Date((base += oneDay));
+        date.push(
+          [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/")
+        );
+        data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
+      }
+      data = this.chartData;
+      let lineChart = this.$echarts.init(document.getElementById("lineChart"));
+      lineChart.setOption(
+        {
+          tooltip: {
+            trigger: "axis",
+            position: function(pt) {
+              return [pt[0], "10%"];
+            }
+          },
+          title: {
+            left: "center",
+            text: "个人资产余额变化图"
+          },
+          toolbox: {
+            feature: {
+              dataZoom: {
+                yAxisIndex: "none"
+              },
+              restore: {},
+              saveAsImage: {}
+            }
+          },
+          grid: {
+            show: "true",
+            borderWidth: "0",
+            height: "60%",
+            width: "80%",
+            y: "20%",
+            x: "12%"
+          },
+          xAxis: {
+            type: "category",
+            boundaryGap: false, // 无间隙
+            data: this.chartDate
+          },
+          yAxis: {
+            type: "value",
+            boundaryGap: [0, "100%"] // 分别表示数据最小值和最大值的延伸范围，可以直接设置数值或者相对的百分比，
+          },
+          dataZoom: [
+            {
+              // 内置于坐标系中，使用户可以在坐标系上通过鼠标拖拽、鼠标滚轮、手指滑动（触屏上）来缩放或漫游坐标系
+              type: "inside",
+              start: 0,
+              end: 10
+            },
+            {
+              start: 0,
+              end: 10,
+              handleIcon:
+                "M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z",
+              handleSize: "80%",
+              handleStyle: {
+                color: "pink",
+                shadowBlur: 3,
+                shadowColor: "red",
+                shadowOffsetX: 2,
+                shadowOffsetY: 2
+              }
+            }
+          ],
+          series: [
+            {
+              name: "当日余额",
+              type: "line",
+              smooth: true,
+              symbol: "none",
+              sampling: "average",
+              itemStyle: {
+                normal: {
+                  color: "rgb(255, 70, 131)"
                 }
-            },
-            title: {
-                left: 'center',
-                text: '个人资产余额变化图'
-            },
-            toolbox: {
-                feature: {
-                    dataZoom: {
-                        yAxisIndex: 'none' 
-                    },
-                    restore: {},
-                    saveAsImage: {}
-                }
-            },
-            grid: {show:'true',borderWidth:'0',height:"60%",width:"80%",y:"20%",x:"12%"},
-            xAxis: {
-                type: 'category',  
-                boundaryGap: false,  // 无间隙
-                data: this.chartDate
-            },
-            yAxis: {
-                type: 'value', 
-                boundaryGap: [0, '100%'] // 分别表示数据最小值和最大值的延伸范围，可以直接设置数值或者相对的百分比，
-            },
-            dataZoom: [{                 // 内置于坐标系中，使用户可以在坐标系上通过鼠标拖拽、鼠标滚轮、手指滑动（触屏上）来缩放或漫游坐标系 
-                type: 'inside',
-                start: 0,
-                end: 10
-            }, {
-                start: 0,
-                end: 10,              
-                handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
-                handleSize: '80%',       
-                handleStyle: {
-                    color: 'pink',
-                    shadowBlur: 3,      
-                    shadowColor: 'red',
-                    shadowOffsetX: 2,
-                    shadowOffsetY: 2
-                }
-            }],
-            series: [
-                {
-                    name: '当日余额',
-                    type: 'line',
-                    smooth: true, 
-                    symbol: 'none',
-                    sampling: 'average', 
-                    itemStyle: {                
-                        normal: {
-                            color: 'rgb(255, 70, 131)' 
-                        }
-                    },
-                    areaStyle: {  
-                    },
-                    data: data
-                }
-            ]
-        },true)
-        setTimeout(function (){
-            window.addEventListener("resize",()=>{
-                lineChart.resize();
-            })
-        },200)
+              },
+              areaStyle: {},
+              data: data
+            }
+          ]
+        },
+        true
+      );
+      setTimeout(function() {
+        window.addEventListener("resize", () => {
+          lineChart.resize();
+        });
+      }, 200);
     }
   },
-  mounted: function(){
+  mounted: function() {
     this.getData();
   }
-
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style >
-  .board{
-    background-color: rgba(255, 255, 255);
-    border-radius:10px
-  }
-  .login-button {
-      
+.board {
+  background-color: rgba(255, 255, 255);
+  border-radius: 10px;
+}
+.login-button {
   -webkit-border-radius: 5px;
   border-radius: 5px;
   margin: 180px auto;
@@ -217,5 +273,8 @@ export default {
   background: #fff;
   border: 1px solid #eaeaea;
   box-shadow: 0 0 25px #cac6c6;
+}
+.fund-table {
+  z-index: 1050;
 }
 </style>
