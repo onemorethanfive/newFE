@@ -15,7 +15,7 @@
       ></el-progress>
     </el-row>
     <el-row type="flex" justify="center">
-      <el-col :xs="{span:10,offset:0,font:6}" :sm="{span:8,offset:4}" :md="{span:6,offset:6}">
+      <el-col :xs="{span:10,offset:0}" :sm="{span:8,offset:3}" :md="{span:6,offset:2}">
         <div class="moneytt">总限额:</div>
         <div class="moneytt">{{restTotal}}/{{limitTotal}}</div>
         <el-progress
@@ -26,7 +26,7 @@
           :status="getProcessStatus(totalProcess)"
         ></el-progress>
       </el-col>
-      <el-col :xs="{span:10,offset:0}" :sm="{span:8,offset:4}" :md="{span:6,offset:6}">
+      <el-col :xs="{span:10}" :sm="{span:8}" :md="{span:6}">
         <div class="moneytt">今日限额:</div>
         <div class="moneytt">{{restToday}}/{{limitToday}}</div>
         <el-progress
@@ -81,7 +81,7 @@ export default {
     getData() {
       var _self = this;
       this.$axios
-        .get(_self.$root.urlport + "/userSpend/updateUserSpend", {
+        .get(_self.$root.urlport + "/userSpend/userSpend", {
           params: {
             userId: this.userId,
             today: this.today
